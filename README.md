@@ -22,70 +22,30 @@ Implementasi **Aplikasi Pengenalan Wajah** menggunakan algoritma **Eigenface** d
 6. **Dataset**: PINS Face Recognition dari Kaggle
 
 ## 📁 Struktur Project
-
-### Untuk GitHub Push (Folder `src/`)
 ```
-src/                        # 📁 Folder utama untuk push ke GitHub
-├── main.py                # 🖥️ GUI aplikasi utama
-├── eigenface_engine.py    # 🧠 Core algoritma eigenface manual
-├── utils.py               # 🔧 Fungsi utility
-├── requirements.txt       # 📦 Dependencies Python
-├── dataset/               # 📷 Dataset demo (3 celebriti, 590 gambar)
-│   ├── Adriana Lima/      
-│   ├── Alexandra Daddario/
-│   └── Alex Lawther/
-├── README.md              # 📖 Dokumentasi lengkap
-└── .gitignore            # 🚫 Git ignore file
+face-recognition/
+├── src/                    # Source code
+│   ├── main.py            # GUI aplikasi utama
+│   ├── eigenface_engine.py # Core algoritma eigenface
+│   ├── utils.py           # Fungsi utility
+│   └── requirements.txt   # Dependencies
+├── dataset/               # Dataset utama (3 celebriti)
+├── full_dataset/          # Dataset lengkap (10 celebriti)
+├── Laporan/              # Folder laporan (gitignored)
+├── README.md             # Dokumentasi
+└── .gitignore           # Git ignore file
 ```
 
-### File Lokal (TIDAK di-push ke GitHub)
-```
-📁 Root Project/
-├── src/                   # 👆 Semua file di atas (untuk GitHub)
-├── full_dataset/          # 📷 Dataset lengkap (10 celebriti, 1798 gambar)
-├── Laporan/              # 📄 Dokumen laporan Word
-└── .venv/                # 🐍 Virtual environment Python lokal
-```
+## 🚀 Cara Instalasi & Menjalankan
 
-## 🐍 Tentang Virtual Environment (.venv)
-
-**`.venv` adalah virtual environment lokal Python** yang berisi:
-- Semua package dependencies (numpy, opencv, matplotlib, dll)
-- Isolated environment terpisah dari Python global system
-- **TIDAK perlu di-push ke GitHub** karena:
-  - Ukuran sangat besar (ratusan MB)
-  - Specific ke OS dan sistem lokal
-  - Bisa di-recreate dengan `pip install -r requirements.txt`
-
-## 🚀 Cara Setup & Menjalankan
-
-### 1. Clone atau Download Project
+### 1. Install Dependencies
 ```bash
-# Download folder src/ ke komputer lokal
-# Atau clone dari GitHub repository
+pip install numpy opencv-python matplotlib pillow joblib scikit-learn scipy
 ```
 
-### 2. Setup Virtual Environment (Opsional tapi Recommended)
+### 2. Jalankan GUI Aplikasi
 ```bash
-# Buat virtual environment baru
-python -m venv .venv
-
-# Aktifkan virtual environment
-# Windows:
-.\.venv\Scripts\Activate.ps1
-# Linux/Mac:
-source .venv/bin/activate
-```
-
-### 3. Install Dependencies
-```bash
-# Install semua package yang diperlukan
-pip install -r requirements.txt
-```
-
-### 4. Jalankan Aplikasi
-```bash
-# Masuk ke folder src dan jalankan
+cd src
 python main.py
 ```
 
@@ -94,8 +54,7 @@ python main.py
 ### Step 1: Pilih Dataset
 1. Buka aplikasi dengan `python main.py`
 2. Klik **"Pilih Folder Dataset"**
-3. Pilih folder `dataset` (3 orang, included di GitHub)
-4. Atau gunakan `full_dataset` jika ada (10 orang, lokal saja)
+3. Pilih folder `dataset` (3 orang) atau `full_dataset` (10 orang)
 
 ### Step 2: Training Model
 1. Klik **"Train Model"** untuk memulai training
@@ -132,21 +91,20 @@ python main.py
 
 ## 📊 Dataset
 
-### Dataset Demo (`dataset/` - Included di GitHub)
+### Dataset Utama (`dataset/`)
 - **3 Celebriti**: Adriana Lima, Alexandra Daddario, Alex Lawther
 - **590 Gambar total**
-- **Ukuran**: ~50MB (reasonable untuk GitHub)
 - **Untuk demo dan pengumpulan tugas**
 
-### Dataset Lengkap (`full_dataset/` - Lokal Only)
+### Dataset Lengkap (`full_dataset/`)
 - **10 Celebriti** terkenal
 - **1798 Gambar total**
-- **Ukuran**: ~200MB (terlalu besar untuk GitHub)
 - **Untuk testing advanced**
 
 ### Sumber Dataset
 - **PINS Face Recognition** dari Kaggle
 - Link: https://www.kaggle.com/datasets/hereisburak/pins-face-recognition
+- Didownload menggunakan Kaggle API sesuai spesifikasi tugas
 
 ## 🎯 Hasil Testing
 
@@ -194,27 +152,18 @@ Educational use untuk **Tugas Aplikasi Nilai Eigen dan Eigen Face pada Pengenala
 
 ## 🎯 Untuk Pengumpulan Tugas
 
-### File untuk Push ke GitHub (Folder `src/`):
-- ✅ `main.py` - Aplikasi GUI utama
-- ✅ `eigenface_engine.py` - Implementasi algoritma manual
-- ✅ `utils.py` - Fungsi pendukung
-- ✅ `dataset/` - Dataset demo (3 celebriti)
-- ✅ `requirements.txt` - Dependencies
-- ✅ `README.md` - Dokumentasi lengkap
-- ✅ `.gitignore` - Git ignore file
-
-### Cara Setup untuk Reviewer:
-1. Download/clone folder `src/`
-2. `pip install -r requirements.txt`
-3. `python main.py`
-4. Pilih folder `dataset`
-5. Train model dan test recognition
+### File Penting:
+- `src/main.py` - Aplikasi GUI utama
+- `src/eigenface_engine.py` - Implementasi algoritma manual
+- `src/utils.py` - Fungsi pendukung
+- `dataset/` - Dataset untuk demo
+- `README.md` - Dokumentasi lengkap
 
 ### Cara Demo:
-1. Jalankan `python main.py`
-2. Pilih folder `dataset` (sudah included)
-3. Train model (2-3 menit)
+1. `cd src && python main.py`
+2. Pilih folder `../dataset`
+3. Train model
 4. Test dengan gambar dari dataset
-5. Tunjukkan hasil recognition dengan distance
+5. Tunjukkan hasil recognition
 
-**✨ Project siap di-push ke GitHub! ✨**
+**✨ Project siap dikumpulkan! ✨**

@@ -47,60 +47,15 @@ class FaceRecognitionGUI:
         main_frame = tk.Frame(self.root, bg='#ecf0f1')
         main_frame.pack(fill='both', expand=True, padx=20, pady=10)
         
-        # Left panel - Controls (Scrollable)
-        left_container = tk.Frame(main_frame, bg='#ecf0f1')
-        left_container.pack(side='left', fill='y', padx=(0, 15))
-        
-        # Create scrollable control panel
-        control_canvas = tk.Canvas(left_container, bg='#f8f9fa', width=280)
-        control_scrollbar = ttk.Scrollbar(left_container, orient="vertical", command=control_canvas.yview)
-        left_frame = tk.Frame(control_canvas, bg='#f8f9fa')
-        
-        # Configure scrollable frame
-        left_frame.bind(
-            "<Configure>",
-            lambda e: control_canvas.configure(scrollregion=control_canvas.bbox("all"))
-        )
-        
-        control_canvas.create_window((0, 0), window=left_frame, anchor="nw")
-        control_canvas.configure(yscrollcommand=control_scrollbar.set)
-        
-        # Pack scrollable components
-        control_canvas.pack(side="left", fill="both", expand=True)
-        control_scrollbar.pack(side="right", fill="y")
-        
-        # Add control panel title
-        title_frame = tk.Frame(left_frame, bg='#2c3e50', height=40)
-        title_frame.pack(fill='x', pady=(0, 10))
-        title_frame.pack_propagate(False)
-        
-        tk.Label(title_frame, text="🎮 Control Panel", 
-                font=('Arial', 12, 'bold'), 
-                bg='#2c3e50', fg='#f8f9fa').pack(expand=True)
-        
-        # Bind mouse wheel to control panel
-        def _on_control_mousewheel(event):
-            control_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
-        
-        # Bind mouse wheel events
-        def bind_mousewheel(widget):
-            widget.bind("<MouseWheel>", _on_control_mousewheel)
-            for child in widget.winfo_children():
-                bind_mousewheel(child)
-        
-        # Apply mouse wheel binding to all widgets in left frame
-        left_frame.bind("<MouseWheel>", _on_control_mousewheel)
-        
-        # Store references for later use
-        self.control_canvas = control_canvas
-        self.bind_mousewheel = bind_mousewheel
-        
-        # Add padding container
-        content_frame = tk.Frame(left_frame, bg='#f8f9fa')
-        content_frame.pack(fill='both', expand=True, padx=15, pady=15)
+        # Left panel - Controls
+        left_frame = tk.LabelFrame(main_frame, text="🎮 Control Panel", 
+                                  font=('Arial', 12, 'bold'), 
+                                  bg='#f8f9fa', fg='#2c3e50',
+                                  padx=15, pady=15)
+        left_frame.pack(side='left', fill='y', padx=(0, 15))
         
         # Dataset section
-        dataset_section = tk.LabelFrame(content_frame, text="📂 1. Dataset Training", 
+        dataset_section = tk.LabelFrame(left_frame, text="📂 1. Dataset Training", 
                                        font=('Arial', 10, 'bold'),
                                        bg='#f8f9fa', fg='#2c3e50')
         dataset_section.pack(fill='x', pady=(0, 15))
@@ -139,7 +94,7 @@ class FaceRecognitionGUI:
         self.gallery_btn.pack(fill='x', pady=(5, 0))
         
         # Test section
-        test_section = tk.LabelFrame(content_frame, text="🔍 2. Test Image", 
+        test_section = tk.LabelFrame(left_frame, text="🔍 2. Test Image", 
                                     font=('Arial', 10, 'bold'),
                                     bg='#f8f9fa', fg='#2c3e50')
         test_section.pack(fill='x', pady=(0, 15))
@@ -155,7 +110,7 @@ class FaceRecognitionGUI:
         self.test_image_label.pack(pady=5)
         
         # Threshold section
-        threshold_section = tk.LabelFrame(content_frame, text="⚙️ 3. Threshold Setting", 
+        threshold_section = tk.LabelFrame(left_frame, text="⚙️ 3. Threshold Setting", 
                                          font=('Arial', 10, 'bold'),
                                          bg='#f8f9fa', fg='#2c3e50')
         threshold_section.pack(fill='x', pady=(0, 15))
@@ -175,7 +130,7 @@ class FaceRecognitionGUI:
         threshold_scale.pack(pady=5)
         
         # Recognition section
-        recognition_section = tk.LabelFrame(content_frame, text="🎯 4. Face Recognition", 
+        recognition_section = tk.LabelFrame(left_frame, text="🎯 4. Face Recognition", 
                                           font=('Arial', 10, 'bold'),
                                           bg='#f8f9fa', fg='#2c3e50')
         recognition_section.pack(fill='x', pady=(0, 15))
@@ -187,7 +142,7 @@ class FaceRecognitionGUI:
         self.recognize_btn.pack(pady=5, fill='x')
         
         # Model info section
-        info_section = tk.LabelFrame(content_frame, text="💾 5. Model Management", 
+        info_section = tk.LabelFrame(left_frame, text="💾 5. Model Management", 
                                     font=('Arial', 10, 'bold'),
                                     bg='#f8f9fa', fg='#2c3e50')
         info_section.pack(fill='x')
@@ -199,13 +154,9 @@ class FaceRecognitionGUI:
         ]
         
         for text, command, color in info_buttons:
-            btn = tk.Button(info_section, text=text, command=command,
-                           bg=color, fg='white', font=('Arial', 9),
-                           relief='flat', padx=15, pady=5)
-            btn.pack(pady=2, fill='x')
-        
-        # Apply mouse wheel binding to all widgets in control panel
-        self.bind_mousewheel(left_frame)
+            tk.Button(info_section, text=text, command=command,
+                     bg=color, fg='white', font=('Arial', 9),
+                     relief='flat', padx=15, pady=5).pack(pady=2, fill='x')
         
         # Right panel - Results
         right_frame = tk.Frame(main_frame, bg='#ecf0f1')
@@ -283,17 +234,10 @@ class FaceRecognitionGUI:
         # Store canvas reference for mouse wheel binding
         self.results_canvas = canvas
         
-        # Bind mouse wheel to results canvas
-        def _on_results_mousewheel(event):
+        # Bind mouse wheel to canvas
+        def _on_mousewheel(event):
             canvas.yview_scroll(int(-1*(event.delta/120)), "units")
-        
-        # Bind mouse wheel to results area only
-        def bind_results_mousewheel(widget):
-            widget.bind("<MouseWheel>", _on_results_mousewheel)
-            for child in widget.winfo_children():
-                bind_results_mousewheel(child)
-        
-        bind_results_mousewheel(self.results_container)
+        canvas.bind_all("<MouseWheel>", _on_mousewheel)
         
         # Initial message
         self.init_message = tk.Label(self.results_container, 

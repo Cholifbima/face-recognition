@@ -21,11 +21,11 @@ wheels/
 *.egg
 MANIFEST
 
-# Virtual Environment (outside src folder)
-../.venv/
-../venv/
-../ENV/
-../env/
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
 
 # IDE
 .vscode/
@@ -39,9 +39,8 @@ MANIFEST
 Thumbs.db
 desktop.ini
 
-# Project Specific (outside src folder)
-../Laporan/
-../full_dataset/
+# Project Specific
+Laporan/
 models/
 *.joblib
 *.pkl
@@ -49,8 +48,10 @@ visualizations/
 temp/
 cache/
 
-# Large datasets outside src
-../pins_face_dataset*/
+# Dataset (too large for git)
+pins_face_dataset*/
+dataset/
+*.zip
 
 # Logs
 *.log 
